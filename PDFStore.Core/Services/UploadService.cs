@@ -7,8 +7,8 @@ namespace PDFStore.Core.Services
 {
     public class UploadService : IUploadService
     {
-        private IDocumentRepository _repository;
-        private IPdfReaderService _readerService;
+        private readonly IDocumentRepository _repository;
+        private readonly IPdfReaderService _readerService;
 
         public UploadService(IDocumentRepository repository, IPdfReaderService readerService)
         {

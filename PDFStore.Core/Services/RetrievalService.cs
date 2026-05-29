@@ -6,7 +6,7 @@ namespace PDFStore.Core.Services
 {
     public class RetrievalService : IRetrievalService
     {
-        private IDocumentRepository _repository;
+        private readonly IDocumentRepository _repository;
 
         public RetrievalService(IDocumentRepository repository)
         {

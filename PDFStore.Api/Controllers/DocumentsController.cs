@@ -8,8 +8,8 @@ namespace PDFStore.Api.Controllers
     [Route("api/documents")]
     public class DocumentsController : ControllerBase
     {
-        IUploadService _uploadService;
-        IRetrievalService _retrievalService;
+        private readonly IUploadService _uploadService;
+        private readonly IRetrievalService _retrievalService;
 
         public DocumentsController(IUploadService uploadService, 
                                    IRetrievalService retrievalService)
