@@ -1,0 +1,6 @@
+@PDFStore.Api_HostAddress = http://localhost:5150
+
+GET {{PDFStore.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

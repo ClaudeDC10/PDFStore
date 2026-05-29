@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="PDFStore.Api/PDFStore.Api.csproj" />
+  <Project Path="PDFStore.Core/PDFStore.Core.csproj" />
+  <Project Path="PDFStore.Data/PDFStore.Data.csproj" />
+</Solution>
