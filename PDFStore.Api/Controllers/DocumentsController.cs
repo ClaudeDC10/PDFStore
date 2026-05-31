@@ -8,8 +8,8 @@ namespace PDFStore.Api.Controllers
     [Route("api/documents")]
     public class DocumentsController : ControllerBase
     {
-        IUploadService _uploadService;
-        IRetrievalService _retrievalService;
+        private readonly IUploadService _uploadService;
+        private readonly IRetrievalService _retrievalService;
 
         public DocumentsController(IUploadService uploadService, 
                                    IRetrievalService retrievalService)
@@ -30,14 +30,20 @@ namespace PDFStore.Api.Controllers
             {
                 return Conflict(error.Message);
             }
+            catch (InvalidDataException error)
+            {
+                return StatusCode(StatusCodes.Status415UnsupportedMediaType, 
+                    $"Only accepts PDF files: {error.Message}");
+            }
             catch (Exception error)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something went wrong: {error.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Something went wrong: {error.Message}");
             }
         }
 
         [HttpGet("retrieve/{id}")]
-        public async Task<ActionResult<Document>> GetRetrieveDocumentById(Guid id)
+        public async Task<ActionResult<Document>> GetRetrieveById(Guid id)
         {
             try
             {
@@ -50,21 +56,23 @@ namespace PDFStore.Api.Controllers
             }
             catch (Exception error)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something went wrong: {error.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Something went wrong: {error.Message}");
             }
         }
 
         [HttpGet("retrieve/all/{fileName}")]
-        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveAllDocumentsByFileName(string fileName, int? limit = null)
+        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveFilterByFileName(string fileName, int? limit = null)
         {
             try
             {
-                var result = await _retrievalService.GetAllByFileName(fileName, limit);
+                var result = await _retrievalService.GetFilterByFileName(fileName, limit);
                 return Ok(result);
             }
             catch (Exception error)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something went wrong: {error.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Something went wrong: {error.Message}");
             } 
         }
 
@@ -78,7 +86,8 @@ namespace PDFStore.Api.Controllers
             }
             catch (Exception error)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Something went wrong: {error.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                    $"Something went wrong: {error.Message}");
             } 
         }
     }

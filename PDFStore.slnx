@@ -1,5 +1,8 @@
 <Solution>
+  <Project Path="PDFStore.Api.UnitTests/PDFStore.Api.UnitTests.csproj" />
   <Project Path="PDFStore.Api/PDFStore.Api.csproj" />
   <Project Path="PDFStore.Core/PDFStore.Core.csproj" />
-  <Project Path="PDFStore.Data/PDFStore.Data.csproj" />
+  <Project Path="PDFStore.Infrastructure.IntegrationTests/PDFStore.Infrastructure.IntegrationTests.csproj" />
+  <Project Path="PDFStore.Infrastructure/PDFStore.Infrastructure.csproj" />
+  <Project Path="PDFStore.Core.UnitTests/PDFStore.Core.UnitTests.csproj" />
 </Solution>

@@ -7,11 +7,13 @@ obj/
 *.db-shm
 *.db-wal
 
-
 # User-specific files
 *.user
 .vs/
 .vscode/
+
+# Test Results
+TestResults/
 
 # Environment/secret files
 appsettings.Development.json

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PDFStore.Core\PDFStore.Core.csproj" />
-    <ProjectReference Include="..\PDFStore.Data\PDFStore.Data.csproj" />
+    <ProjectReference Include="..\PDFStore.Infrastructure\PDFStore.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

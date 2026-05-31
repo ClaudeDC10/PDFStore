@@ -6,7 +6,7 @@ namespace PDFStore.Core.Services
 {
     public class RetrievalService : IRetrievalService
     {
-        private IDocumentRepository _repository;
+        private readonly IDocumentRepository _repository;
 
         public RetrievalService(IDocumentRepository repository)
         {
@@ -19,15 +19,15 @@ namespace PDFStore.Core.Services
 
             if (item == null)
             {
-                throw new KeyNotFoundException($"No item found with id {id}");
+                throw new KeyNotFoundException($"No item found with id {id}.");
             }
 
             return convertToDocument(item);
         }
 
-        public async Task<IEnumerable<Document>> GetAllByFileName(string fileName, int? limit = null)
+        public async Task<IEnumerable<Document>> GetFilterByFileName(string fileName, int? limit = null)
         {
-            var items = await _repository.GetAllByFileName(fileName, limit);
+            var items = await _repository.GetFilterByFileName(fileName, limit);
             return convertToDocument(items);
         }
 
@@ -38,13 +38,9 @@ namespace PDFStore.Core.Services
         }
 
         private Document convertToDocument(DocumentItem item)
-        {
-            return new Document(item.Id, item.FileName, item.Content);
-        }
+            => new(item.Id, item.FileName, item.Content);
 
         private IEnumerable<Document> convertToDocument(IEnumerable<DocumentItem> items)
-        {
-            return items.Select(convertToDocument);
-        }
+            => items.Select(convertToDocument);
     }
 }

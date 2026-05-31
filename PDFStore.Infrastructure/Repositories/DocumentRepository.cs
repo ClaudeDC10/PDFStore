@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PDFStore.Core.Domain.Entities;
 using PDFStore.Core.Interfaces;
 
-namespace PDFStore.Data.Repositories
+namespace PDFStore.Infrastructure.Repositories
 {
     public class DocumentRepository : IDocumentRepository
     {
@@ -32,9 +32,9 @@ namespace PDFStore.Data.Repositories
             return await _context.DocumentItems.FirstOrDefaultAsync(x => x.ContentHash == sha256);
         }
 
-        public async Task<IEnumerable<DocumentItem>> GetAllByFileName(string fileName, int? limit = null)
+        public async Task<IEnumerable<DocumentItem>> GetFilterByFileName(string fileName, int? limit = null)
         {
-            var query = _context.DocumentItems.Where(x => x.FileName == fileName);
+            var query = _context.DocumentItems.Where(x => x.FileName.Contains(fileName));
 
             if (limit != null)
             {

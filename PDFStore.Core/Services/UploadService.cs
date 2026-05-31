@@ -2,15 +2,16 @@ using PDFStore.Core.Domain.Contracts;
 using PDFStore.Core.Domain.Entities;
 using PDFStore.Core.Interfaces;
 using System.Security.Cryptography;
+using UglyToad.PdfPig.Core;
 
 namespace PDFStore.Core.Services
 {
     public class UploadService : IUploadService
     {
-        private IDocumentRepository _repository;
-        private IPdfReaderService _readerService;
+        private readonly IDocumentRepository _repository;
+        private readonly IPdfReaderAdapter _readerService;
 
-        public UploadService(IDocumentRepository repository, IPdfReaderService readerService)
+        public UploadService(IDocumentRepository repository, IPdfReaderAdapter readerService)
         {
             _repository = repository;
             _readerService = readerService;
@@ -23,12 +24,21 @@ namespace PDFStore.Core.Services
 
             if (await _repository.GetByHash(hexString) != null)
             {
-                throw new InvalidOperationException("Duplicate data found");
+                throw new InvalidOperationException("Duplicate data found.");
             }
 
             stream.Position = 0;
+            string content;
 
-            var content = await _readerService.PdfToString(stream);
+            try
+            {
+                content = await _readerService.PdfToString(stream);
+            }
+            catch (PdfDocumentFormatException error)
+            {
+                throw new InvalidDataException($"Invalid file type uploaded: {error.Message}");
+            }
+            
 
             var item = await _repository.Insert(
                 new DocumentItem(Guid.Empty, fileName, hexString, content));

@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PDFStore.Data;
+using PDFStore.Infrastructure;
 
 #nullable disable
 
-namespace PDFStore.Data.Migrations
+namespace PDFStore.Infrastructure.Migrations
 {
     [DbContext(typeof(DocumentContext))]
     partial class DocumentContextModelSnapshot : ModelSnapshot

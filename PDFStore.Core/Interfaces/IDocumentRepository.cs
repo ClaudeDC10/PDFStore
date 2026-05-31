@@ -10,7 +10,7 @@ namespace PDFStore.Core.Interfaces
 
         public Task<DocumentItem?> GetByHash(string sha256);
 
-        public Task<IEnumerable<DocumentItem>> GetAllByFileName(string filename, int? limit = null);
+        public Task<IEnumerable<DocumentItem>> GetFilterByFileName(string filename, int? limit = null);
 
         public Task<IEnumerable<DocumentItem>> GetAll(int? limit = null);
     }

@@ -1,10 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using PDFStore.Core.Interfaces;
-using PDFStore.Data;
-using PDFStore.Data.Repositories;
+using PDFStore.Infrastructure;
+using PDFStore.Infrastructure.Repositories;
 
 namespace PDFStore.Api.Extensions
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceCollectionExtension
     {
         public static IServiceCollection AddPdfStoreData(this IServiceCollection serviceDescriptors, IConfiguration config)

@@ -1,0 +1,17 @@
+name: PDFStore-PR Pipeline
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: dotnet restore
+      run: dotnet restore PDFStore.slnx
+    - name: dotnet build
+      run: dotnet build PDFStore.slnx --configuration Release --no-restore
+    - name: dotnet test
+      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
