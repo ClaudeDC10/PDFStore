@@ -8,7 +8,7 @@ An ASP.NET Core Web API for uploading PDF files, extracting their text content v
 |---|---|
 | `PDFStore.Api` | Web API layer — controllers, DI setup, entry point |
 | `PDFStore.Core` | Business logic — services and interfaces |
-| `PDFStore.Data` | Data access layer — EF Core DbContext and repositories |
+| `PDFStore.Infrastructure` | Data access layer — EF Core DbContext and repositories |
 
 ## Tech Stack
 
@@ -46,12 +46,12 @@ dotnet tool install --global dotnet-ef
 
 *Generate Migration files*
 ```pwsh
-dotnet ef migrations add InitialCreate --project PDFStore.Data --startup-project PDFStore.Api
+dotnet ef migrations add InitialCreate --project PDFStore.Infrastructure --startup-project PDFStore.Api
 ```
 
 *Create database*
 ```pwsh
-dotnet ef database update --project PDFStore.Data --startup-project PDFStore.Api
+dotnet ef database update --project PDFStore.Infrastructure --startup-project PDFStore.Api
 ```
 
 ## Getting Started

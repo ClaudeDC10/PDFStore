@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PDFStore.Data;
+using PDFStore.Infrastructure;
 
 #nullable disable
 
-namespace PDFStore.Data.Migrations
+namespace PDFStore.Infrastructure.Migrations
 {
     [DbContext(typeof(DocumentContext))]
     [Migration("20260529124624_InitialCreate")]

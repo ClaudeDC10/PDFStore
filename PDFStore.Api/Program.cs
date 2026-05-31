@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using PDFStore.Api.Extensions;
 using PDFStore.Core.Interfaces;
 using PDFStore.Core.Services;
+using PDFStore.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPdfStoreData(builder.Configuration);
 builder.Services.AddScoped<IUploadService, UploadService>();
 builder.Services.AddScoped<IRetrievalService, RetrievalService>();
-builder.Services.AddTransient<IPdfReaderService, PdfReaderService>();
+builder.Services.AddTransient<IPdfReaderAdapter, PdfReaderAdapter>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -29,3 +31,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+[ExcludeFromCodeCoverage]
+internal partial class Program { }

@@ -1,6 +1,6 @@
 namespace PDFStore.Core.Interfaces
 {
-    public interface IPdfReaderService
+    public interface IPdfReaderAdapter
     {
         public Task<string> PdfToString(Stream stream);
     }

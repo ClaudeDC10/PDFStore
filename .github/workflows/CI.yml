@@ -1,0 +1,67 @@
+name: PDFStore Pipeline
+
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: dotnet restore
+      run: dotnet restore PDFStore.slnx
+    - name: dotnet build
+      run: dotnet build PDFStore.slnx --configuration Release --no-restore
+    - name: Publish artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: PDFStoreBuild
+        retention-days: 1
+        path: |
+          **/bin/Release/net*/
+  
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: PDFStoreBuild
+    - name: dotnet restore
+      run: dotnet restore PDFStore.slnx
+    - name: dotnet test
+      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
+    - name: Publish test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: PDFStoreTestResults
+        retention-days: 1
+        path: |
+          **/TestResults/**/*.xml
+  
+  code-coverage:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+
+    steps:
+    - name: Download test results
+      uses: actions/download-artifact@v4
+      with:
+        name: PDFStoreTestResults
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
+      with:
+        reports: '**/TestResults/**/*.xml'
+        reporttypes: 'MarkdownSummary'
+        targetdir: 'coverage-report'
+    - name: Job Summary
+      run: cat coverage-report/Summary.md >> $GITHUB_STEP_SUMMARY

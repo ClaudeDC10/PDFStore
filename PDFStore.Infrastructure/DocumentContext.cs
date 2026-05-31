@@ -1,15 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using PDFStore.Core.Domain.Entities;
 
-namespace PDFStore.Data
+namespace PDFStore.Infrastructure
 {
-    public class DocumentContext : DbContext
+    public class DocumentContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<DocumentItem> DocumentItems { get; set; }
-
-        public DocumentContext(DbContextOptions options) : base(options)
-        {
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
