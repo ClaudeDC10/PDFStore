@@ -16,7 +16,7 @@ jobs:
     - name: dotnet build
       run: dotnet build PDFStore.slnx --configuration Release --no-restore
     - name: Publish artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: PDFStoreBuild
         path: |
@@ -30,13 +30,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Download build artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: PDFStoreBuild
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
     - name: Publish test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: PDFStoreTestResults
         path: |
@@ -50,7 +50,7 @@ jobs:
 
     steps:
     - name: Download test results
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: PDFStoreTestResults
     - name: ReportGenerator
