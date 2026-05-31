@@ -32,7 +32,9 @@ jobs:
       with:
         name: PDFStoreBuild
         path: |
-          **/bin/Release/net*/
+          ../**/bin/Release/net*/
+    - name: Check Build Path
+      run: find . -name "*.dll" | head -20
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
     - name: Publish test results
