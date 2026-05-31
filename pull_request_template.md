@@ -5,9 +5,10 @@
 - Specify changes
 
 ## Tests
-- Did the tests pass
+- Specify added tests
 
 ## Checklist
 - [ ] Build passes
 - [ ] No new warnings, if yes, justify
-- [ ] Tests passed
+- [ ] Unit tests passed
+- [ ] Integration tests passed
