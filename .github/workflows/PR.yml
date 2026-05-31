@@ -32,7 +32,7 @@ jobs:
       with:
         name: PDFStoreBuild
     - name: dotnet test
-      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build --verbosity normal
+      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --verbosity normal
     - name: Publish test results
       uses: actions/upload-artifact@v4
       with:
