@@ -38,8 +38,8 @@ jobs:
       run: dotnet restore PDFStore.slnx
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
-    - name: Check Test Results Path
-      run: find . -path "*/TestResults/*"
+    - name: Check All
+      run: ls -la
     - name: Publish test results
       uses: actions/upload-artifact@v4
       with:
