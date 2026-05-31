@@ -17,6 +17,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PDFStoreBuild
+        retention-days: 1
         path: |
           **/bin/Release/net*/
   
@@ -27,16 +28,23 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - name: Check Workspace Path
+      run: pwd
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
         name: PDFStoreBuild
+    - name: dotnet restore
+      run: dotnet restore PDFStore.slnx
     - name: dotnet test
-      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --verbosity normal
+      run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
+    - name: Check Test Results Path
+      run: find . -path "*/TestResults/*"
     - name: Publish test results
       uses: actions/upload-artifact@v4
       with:
         name: PDFStoreTestResults
+        retention-days: 1
         path: |
           **/TestResults/**/*.xml
   

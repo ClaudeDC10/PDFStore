@@ -19,6 +19,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PDFStoreBuild
+        retention-days: 1
         path: |
           **/bin/Release/net*/
   
@@ -41,6 +42,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PDFStoreTestResults
+        retention-days: 1
         path: |
           **/TestResults/**/*.xml
   
