@@ -34,8 +34,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: PDFStoreBuild
-        path: |
-          **/bin/Release/net*/
+    - name: dotnet restore
+      run: dotnet restore PDFStore.slnx
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
     - name: Publish test results
@@ -60,7 +60,7 @@ jobs:
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
       with:
-        reports: '**/TestResults/coverage.cobertura.xml'
+        reports: '**/TestResults/**/*.xml'
         reporttypes: 'MarkdownSummary'
         targetdir: 'coverage-report'
     - name: Job Summary

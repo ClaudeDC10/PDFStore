@@ -28,8 +28,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: Check Workspace Path
-      run: pwd
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
@@ -38,8 +36,6 @@ jobs:
       run: dotnet restore PDFStore.slnx
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
-    - name: Check All
-      run: ls -la
     - name: Publish test results
       uses: actions/upload-artifact@v4
       with:
@@ -63,7 +59,7 @@ jobs:
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@5.5.10
       with:
-        reports: '**/TestResults/coverage.cobertura.xml'
+        reports: '**/TestResults/**/*.xml'
         reporttypes: 'MarkdownSummary'
         targetdir: 'coverage-report'
     - name: Job Summary
