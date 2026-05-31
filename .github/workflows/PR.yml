@@ -31,6 +31,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: PDFStoreBuild
+        path: |
+          **/bin/Release/net*/
     - name: dotnet test
       run: dotnet test PDFStore.slnx --settings coverlet.runsettings --configuration Release --no-build
     - name: Publish test results
