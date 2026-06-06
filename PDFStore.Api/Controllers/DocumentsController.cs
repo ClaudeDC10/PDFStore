@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PDFStore.Core.Domain.Contracts;
 using PDFStore.Core.Interfaces;
+using PDFStore.Api.Domain.Models;
 
 namespace PDFStore.Api.Controllers
 {   
@@ -19,10 +20,13 @@ namespace PDFStore.Api.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<ActionResult<Document>> PostUploadDocument(IFormFile pdf)
+        [RequestSizeLimit(50 * 1024 * 1024)]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Document>> PostUploadDocument([FromForm] FileUploadModel file)
         {
             try
             {
+                var pdf = file.FormFile;
                 var result = await _uploadService.Upload(pdf.FileName, pdf.OpenReadStream());
                 return Ok(result);
             }
@@ -43,7 +47,7 @@ namespace PDFStore.Api.Controllers
         }
 
         [HttpGet("retrieve/{id}")]
-        public async Task<ActionResult<Document>> GetRetrieveById(Guid id)
+        public async Task<ActionResult<Document>> GetRetrieveById([FromRoute] Guid id)
         {
             try
             {
@@ -62,7 +66,7 @@ namespace PDFStore.Api.Controllers
         }
 
         [HttpGet("retrieve/all/{fileName}")]
-        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveFilterByFileName(string fileName, int? limit = null)
+        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveFilterByFileName([FromRoute] string fileName, [FromQuery] int? limit = null)
         {
             try
             {
@@ -77,7 +81,7 @@ namespace PDFStore.Api.Controllers
         }
 
         [HttpGet("retrieve/all")]
-        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveAllDocuments(int? limit = null)
+        public async Task<ActionResult<IEnumerable<Document>>> GetRetrieveAllDocuments([FromQuery] int? limit = null)
         {
             try
             {
