@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PDFStore.Api.Controllers;
 using PDFStore.Api.UnitTests.Extension;
+using PDFStore.Api.Domain.Models;
 using PDFStore.Core.Domain.Contracts;
 using PDFStore.Core.Interfaces;
 using Shouldly;
@@ -15,14 +16,17 @@ namespace PDFStore.Api.UnitTests
     {
         private readonly Mock<IUploadService> _uploadService;
         private readonly Mock<IRetrievalService> _retrievalService;
-        private readonly IFormFile _mockFile;
+        private readonly FileUploadModel _mockFile;
         private const string _mockError = "Mock error";
 
         public UploadMethodsTests()
         {
             _retrievalService = new();
             _uploadService = new();
-            _mockFile = new Mock<IFormFile>().Object;
+            _mockFile = new FileUploadModel 
+            { 
+                FormFile = new Mock<IFormFile>().Object 
+            };
         }
 
 
