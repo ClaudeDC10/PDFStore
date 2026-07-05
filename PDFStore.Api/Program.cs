@@ -4,7 +4,7 @@ using PDFStore.Api.Extensions;
 using PDFStore.Core.Interfaces;
 using PDFStore.Core.Services;
 using PDFStore.Infrastructure.Services;
-using Swashbuckle.AspNetCore.SwaggerUI;
+using PDFStore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +22,13 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<DocumentContext>();
+    await context.Database.EnsureCreatedAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
